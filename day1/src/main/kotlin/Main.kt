@@ -1,5 +1,3 @@
-package xyz.epicebic.aoc.day1
-
 import xyz.epicebic.aoc.util.readResourceLines
 import kotlin.math.max
 import kotlin.math.min

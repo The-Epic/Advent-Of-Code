@@ -1,7 +1,4 @@
-package xyz.epicebic.aoc.day2
-
 import xyz.epicebic.aoc.util.readResourceLines
-import java.io.File
 import kotlin.math.absoluteValue
 
 fun main() {

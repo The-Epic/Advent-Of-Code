@@ -12,6 +12,7 @@ dependencyResolutionManagement {
 }
 
 file(".").listFiles().filter { it.isDirectory }.forEach { file ->
+    if (file.name == "day") return@forEach
     if (file.resolve("build.gradle.kts").exists()) {
         include(":${file.name}")
     }
