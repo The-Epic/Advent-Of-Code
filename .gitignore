@@ -42,5 +42,7 @@ bin/
 ### Mac OS ###
 .DS_Store
 
+input-**.txt
+input-*.txt
 input.txt
 !day/src/main/resources/input.txt
