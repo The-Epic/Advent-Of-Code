@@ -26,6 +26,11 @@ private fun runDay(day: Day) {
     val id = day.number
     val inputLines = readResourceLines("input-$id.txt")
     println("Day $id")
-    println("Part One: ${day.partOne(inputLines)}")
-    println("Part Two: ${day.partTwo(inputLines)}")
+    val start = System.currentTimeMillis()
+    print("Part One: ${day.partOne(inputLines)} ")
+    val partOneTook = System.currentTimeMillis() - start
+    println("(${partOneTook}ms)")
+    print("Part Two: ${day.partTwo(inputLines)} ")
+    val partTwoTook = System.currentTimeMillis() - start - partOneTook
+    println("(${partTwoTook}ms)")
 }
