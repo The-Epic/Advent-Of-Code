@@ -4,10 +4,9 @@ import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 import java.nio.file.StandardCopyOption
 import kotlin.io.path.ExperimentalPathApi
-import kotlin.io.path.OnErrorResult
+import kotlin.io.path.absolutePathString
 import kotlin.io.path.copyTo
-import kotlin.io.path.copyToRecursively
-import kotlin.io.path.name
+import kotlin.io.path.pathString
 import kotlin.io.path.readLines
 import kotlin.io.path.readText
 import kotlin.io.path.writeLines
@@ -43,7 +42,7 @@ val task = tasks.create("newDay") {
         main.writeLines(mainLines)
 
         exec {
-            commandLine("git", "add", dayFile.name)
+            commandLine("git", "add", projectDir.relativize(dayFile).pathString)
         }
 
         val client = HttpClient.newHttpClient()
