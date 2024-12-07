@@ -38,7 +38,7 @@ val task = tasks.create("newDay") {
         val main = days.resolve("kotlin/Main.kt")
 
         val mainLines = main.readLines().toMutableList()
-        mainLines.add(6, "        Day$dayToCreate(),")
+        mainLines.add(7, "        Day$dayToCreate(),")
         main.writeLines(mainLines)
 
         exec {
