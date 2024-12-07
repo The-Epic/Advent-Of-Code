@@ -1,11 +1,11 @@
 
 import days.*
 import xyz.epicebic.aoc.util.readResourceLines
-import kotlin.system.measureTimeMillis
 import kotlin.time.measureTime
 
 fun main(args: Array<String>) {
     val days = listOf(
+        Day7(),
         Day6(),
         Day5(),
         Day4(),
@@ -27,7 +27,7 @@ fun main(args: Array<String>) {
 
 private fun runDay(day: Day) {
     val id = day.number
-    val inputLines = readResourceLines("input-$id.txt")
+    val inputLines = readResourceLines("input-$id.txt").dropLastWhile { it.isBlank() }
     println("Day $id")
 
     var partOneAnswer: Any
