@@ -18,7 +18,7 @@ class Day9 : Day(9) {
         var first = 0
         var second = converted.size - 1
 
-        while (-1 in converted) {
+        for (i in converted.indices) {
             if (converted[first] != -1) {
                 first++
                 continue
