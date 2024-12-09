@@ -1,91 +1,72 @@
 package days
 
+import xyz.epicebic.aoc.util.Direction
+import xyz.epicebic.aoc.util.Grid
+
 class Day6 : Day(6) {
+
+    private val startChar = '^'
+    private val wallChar = '#'
+    private val visited = mutableSetOf<GuardPosition>()
 
 
     override fun partOne(inputLines: List<String>): Any {
+        val grid = Grid.create(inputLines)
 
-        var startLocation: Pair<Int, Int> = -1 to -1
-
-        for ((xIndex, x) in inputLines.withIndex()) {
-            for ((zIndex, z) in x.withIndex()) {
-                if (z == '^') {
-                    startLocation = xIndex to zIndex
-                    break
-                }
-            }
-
-            if (startLocation.first != -1 && startLocation.second != -1) break
-        }
-
-        // set start direction, default north, while true move in direction by adding rel cords, if coord x is small than 0 its finished, if its bigger than input its done
-        // if x is smaller than 0 its finished, if its bigger than line.length its done
-        // inside loop create a counter of spaces moved, upon next location being a '#' set direction to direc.next and continue loop
-
-        val walkedSpaces = mutableListOf<Pair<Int, Int>>()
-        var movingDirection = Direction.NORTH
-
-        var dirX = startLocation.first
-        var dirZ = startLocation.second
-        while (true) {
-            if (dirX < 0) break
-            if (dirX >= inputLines.size) break
-            if (dirZ < 0) break
-            if (dirZ >= inputLines[dirX].length) break
-            var relativeDir = movingDirection.relativeCoords
-
-
-            val currentChar = charAt(inputLines, dirX, dirZ)
-            val nextChar = charAt(inputLines, dirX + relativeDir.first, dirZ + relativeDir.second)
-
-            if (currentChar == '.' || currentChar == '^') {
-                walkedSpaces.add(dirX to dirZ)
-            }
-
-            if (nextChar == ' ') {
-                break
-            } else if (nextChar == '#') {
-                movingDirection = movingDirection.next
-                relativeDir = movingDirection.relativeCoords
-            }
-
-            dirX += relativeDir.first
-            dirZ += relativeDir.second
-        }
-
-        val spacesDistinct = walkedSpaces.distinct()
-
-        return spacesDistinct.size
-    }
-
-    private fun charAt(lines: List<String>, x: Int, z: Int): Char = try {
-        lines[x][z]
-    } catch (_: Exception) {
-        ' '
+        return run(grid, false)
     }
 
     override fun partTwo(inputLines: List<String>): Any {
-        return "Unable to Solve."
-    }
-
-}
+        val grid = Grid.create(inputLines)
+        var counter = 0
 
 
-private enum class Direction(val relativeCoords: Pair<Int, Int>) {
-    NORTH(-1 to 0),
-    EAST(0 to 1),
-    SOUTH(1 to 0),
-    WEST(0 to -1);
+        println(visited)
+        for ((location, direction) in visited) {
+            val x = location.first
+            val z = location.second
+            val copy = grid.clone().move(x, z)
+            val current = copy.currentChar()
+            if (current == startChar || current == wallChar) continue
+            copy.set(wallChar)
 
-    lateinit var next: Direction
-
-    companion object {
-        init {
-            // Define the circular dependencies here
-            NORTH.next = EAST
-            EAST.next = SOUTH
-            SOUTH.next = WEST
-            WEST.next = NORTH
+            if (run(copy, true) == 1) counter++
         }
+
+        return counter
     }
+
+    private fun run(grid: Grid, looping: Boolean): Int {
+        grid.moveToFirst(startChar)
+
+        var direction = Direction.NORTH
+
+        val walkedLocations = mutableSetOf<GuardPosition>()
+        walkedLocations.add(GuardPosition(grid.currentPos, direction))
+
+        while (true) {
+            var nextChar = grid.look(direction)
+
+            if (nextChar == null) break
+            else while (nextChar == wallChar) {
+                direction = direction.nextClockwise
+                nextChar = grid.look(direction)
+            }
+
+            grid.move(direction)
+
+            val currentLocation = GuardPosition(grid.currentPos, direction)
+            if (looping && walkedLocations.contains(currentLocation)) {
+                return 1
+            } else {
+                walkedLocations.add(currentLocation)
+            }
+        }
+
+        val walkedDistinct = walkedLocations.distinctBy { it.location }
+        if (!looping) visited.addAll(walkedDistinct)
+        return if (looping) 0 else walkedDistinct.count()
+    }
+
+    private data class GuardPosition(val location: Pair<Int, Int>, val direction: Direction)
 }

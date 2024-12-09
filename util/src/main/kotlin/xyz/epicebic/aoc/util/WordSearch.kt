@@ -17,10 +17,9 @@ class WordSearch(val input: List<String>) {
                 if (column != startChar) continue
 
                 for (direction in directions) {
-                    val relCoords = direction.directionalCoordinates
 
-                    var dirX = x + relCoords.first
-                    var dirZ = z + relCoords.second
+                    var dirX = x + direction.x
+                    var dirZ = z + direction.z
                     var lastChar = startChar
 
                     for (index in 1 until word.length) {
@@ -36,8 +35,8 @@ class WordSearch(val input: List<String>) {
 
                         lastChar = currentChar
 
-                        dirX += relCoords.first
-                        dirZ += relCoords.second
+                        dirX += direction.x
+                        dirZ += direction.z
                     }
 
                     if (lastChar == endChar) counter++
@@ -50,18 +49,6 @@ class WordSearch(val input: List<String>) {
     private fun nextChar(word: String, index: Int): Char {
         if (index < 0 || index >= word.length) return ' '
         return word[index]
-    }
-
-    // constructor: x to z
-    enum class Direction(val directionalCoordinates: Pair<Int, Int>) {
-        FORWARD(0 to 1),
-        BACKWARD(0 to -1),
-        UP(-1 to 0),
-        DOWN(1 to 0),
-        DIAGONAL_LEFT_UP(-1 to -1),
-        DIAGONAL_LEFT_DOWN(1 to -1),
-        DIAGONAL_RIGHT_UP(-1 to 1),
-        DIAGONAL_RIGHT_DOWN(1 to 1)
     }
 }
 
