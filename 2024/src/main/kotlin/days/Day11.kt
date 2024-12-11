@@ -1,5 +1,7 @@
 package days
 
+import xyz.epicebic.aoc.util.halve
+
 class Day11 : Day(11) {
     override fun partOne(inputLines: List<String>): Any {
         return inputLines.first().split(" ").sumOf { stone -> count(25, 0, stone.toLong()) }
@@ -17,9 +19,7 @@ class Day11 : Day(11) {
         cache[rounds to stone] = if (stone == 0L) {
             count(limit, rounds + 1, 1)
         } else if (stone.toString().length % 2 == 0) {
-            val string = stone.toString()
-            val a = string.substring(0, string.count() / 2)
-            val b = string.substring(string.count() / 2)
+            val (a, b) = stone.toString().halve()
             count(limit, rounds + 1, a.toLong()) + count(limit, rounds + 1, b.toLong())
         } else count(limit, rounds + 1, stone * 2024)
         return cache[rounds to stone]!!
