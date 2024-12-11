@@ -21,7 +21,6 @@ class Day6 : Day(6) {
         var counter = 0
 
 
-        println(visited)
         for ((location, direction) in visited) {
             val x = location.first
             val z = location.second
@@ -36,7 +35,7 @@ class Day6 : Day(6) {
         return counter
     }
 
-    private fun run(grid: Grid, looping: Boolean): Int {
+    private fun run(grid: Grid<Char>, looping: Boolean): Int {
         grid.moveToFirst(startChar)
 
         var direction = Direction.NORTH

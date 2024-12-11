@@ -33,7 +33,7 @@ class Day10 : Day(10) {
         return counter
     }
 
-    private fun nextPoints(previous: GridPoint, next: Char, grid: Grid): List<GridPoint> {
+    private fun nextPoints(previous: GridPoint, next: Char, grid: Grid<Char>): List<GridPoint> {
         val clone = grid.clone()
         val found = mutableListOf<GridPoint>()
         clone.move(previous)
@@ -55,7 +55,7 @@ class Day10 : Day(10) {
         return trailHeads.sumOf { scoreTrailHead(it, trail, grid) }
     }
 
-    private fun scoreTrailHead(point: GridPoint, trail: List<Char>, grid: Grid): Long = if (trail.size == 1) {
+    private fun scoreTrailHead(point: GridPoint, trail: List<Char>, grid: Grid<Char>): Long = if (trail.size == 1) {
         nextPoints(point, trail[0], grid).count().toLong()
     } else {
         nextPoints(point, trail[0], grid).sumOf { scoreTrailHead(it, trail.subList(1, trail.size), grid) }
