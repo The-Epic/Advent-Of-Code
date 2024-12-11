@@ -15,10 +15,25 @@ class Grid(val rows: Int, val cols: Int, var currentRow: Int, var currentCol: In
         return this
     }
 
+    fun move(point: GridPoint): Grid {
+        if (point.x < 0 || point.x >= rows || point.z < 0 || point.z >= cols) error("Invalid access of grid at ${point.x}, ${point.z}")
+
+        currentRow = point.x
+        currentCol = point.z
+
+        return this
+    }
+
     fun look(row: Int, col: Int): Char? {
         if (row < 0 || row >= rows || col < 0 || col >= cols) return null
 
         return grid[row][col]
+    }
+
+    fun look(point: GridPoint): Char? {
+        if (point.x < 0 || point.x >= rows || point.z < 0 || point.z >= cols) return null
+
+        return grid[point.x][point.z]
     }
 
     fun move(direction: Direction): Grid {
@@ -29,10 +44,10 @@ class Grid(val rows: Int, val cols: Int, var currentRow: Int, var currentCol: In
         return look(currentRow + direction.x, currentCol + direction.z)
     }
 
-    fun locateFirst(character: Char): Pair<Int, Int> {
+    fun locateFirst(character: Char): GridPoint {
         for (row in 0..rows) {
             for (col in 0..cols) {
-                if(look(row, col) == character) return row to col
+                if(look(row, col) == character) return GridPoint(row, col)
             }
         }
 
@@ -42,8 +57,8 @@ class Grid(val rows: Int, val cols: Int, var currentRow: Int, var currentCol: In
     fun moveToFirst(character: Char): Grid {
         val location = locateFirst(character)
 
-        currentRow = location.first
-        currentCol = location.second
+        currentRow = location.x
+        currentCol = location.z
         return this
     }
 
@@ -55,6 +70,17 @@ class Grid(val rows: Int, val cols: Int, var currentRow: Int, var currentCol: In
 
     fun currentChar(): Char {
         return grid[currentRow][currentCol]
+    }
+
+    fun locateAll(character: Char): List<GridPoint> {
+        val foundPoints = mutableListOf<GridPoint>()
+        for (row in 0 .. rows ) {
+            for (col in 0 .. cols) {
+                if (look(row, col) == character) foundPoints.add(GridPoint(row, col))
+            }
+        }
+
+        return foundPoints
     }
 
     fun clone(): Grid {
@@ -86,5 +112,11 @@ class Grid(val rows: Int, val cols: Int, var currentRow: Int, var currentCol: In
             return Grid(grid.size, grid[0].size, grid.toMutableList())
         }
     }
+}
 
+data class GridPoint(val x: Int, val z: Int) : Comparable<GridPoint> {
+    override fun compareTo(other: GridPoint) = compareValuesBy(this, other, GridPoint::x, GridPoint::z)
+
+    operator fun plus(other: Direction) = GridPoint(x + other.x, z + other.z)
+    operator fun plus(other: GridPoint) = GridPoint(x + other.x, z + other.z)
 }

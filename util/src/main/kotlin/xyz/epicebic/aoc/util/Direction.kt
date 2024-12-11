@@ -20,5 +20,7 @@ enum class Direction(val x: Int, val z: Int) {
             SOUTH.nextClockwise = WEST
             WEST.nextClockwise = NORTH
         }
+
+        val CARDINAL_DIRECTIONS = listOf(NORTH, EAST, SOUTH, WEST)
     }
 }
