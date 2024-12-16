@@ -6,7 +6,7 @@ class Grid<T : Comparable<T>>(val rows: Int, val cols: Int, var currentRow: Int,
 
     constructor(grid: MutableList<MutableList<T>>) : this(grid.count(), grid[0].count(), grid)
 
-    val currentPos get() = currentRow to currentCol
+    val currentPos get() = GridPoint(currentRow, currentCol)
 
     fun move(row: Int, col: Int): Grid<T> {
         if (row < 0 || row >= rows || col < 0 || col >= cols) error("Invalid access of grid at $row, $col")
@@ -70,6 +70,14 @@ class Grid<T : Comparable<T>>(val rows: Int, val cols: Int, var currentRow: Int,
         return this
     }
 
+    fun set(point: GridPoint, value: T): Grid<T> {
+        if (point.x < 0 || point.x >= rows || point.z < 0 || point.z >= cols) error("Invalid modification of grid at ${point.x}, ${point.z}")
+
+        grid[point.x][point.z] = value
+
+        return this
+    }
+
     fun currentChar(): T {
         return grid[currentRow][currentCol]
     }
@@ -100,7 +108,11 @@ class Grid<T : Comparable<T>>(val rows: Int, val cols: Int, var currentRow: Int,
     }
 
     override fun toString(): String {
-        return "Grid(rows=$rows, cols=$cols, currentRow=$currentRow, currentCol=$currentCol, grid=\n${grid.joinToString("\n") }})"
+        return "Grid(rows=$rows, cols=$cols, currentRow=$currentRow, currentCol=$currentCol, grid=\n${
+            grid.joinToString(
+                "\n"
+            ) { it.joinToString("") }
+        }})"
     }
 
 

@@ -50,6 +50,7 @@ open class NewDay : DefaultTask() {
         dayFile.writeLines(modified)
 
         addGit(dayFile)
+        updateMain(pkg.resolve("kotlin/Main.kt"))
 
         println("Created $year/$day")
     }
@@ -72,5 +73,11 @@ open class NewDay : DefaultTask() {
         val builder = ProcessBuilder("git", "add", projectDir.relativize(day).pathString)
         builder.directory(projectDir.toFile())
         builder.start().waitFor()
+    }
+
+    private fun updateMain(main: Path) {
+        val modified = main.readLines().toMutableList()
+        modified[7] = "Day$day(),"
+        main.writeLines(modified)
     }
 }

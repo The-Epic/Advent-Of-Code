@@ -22,5 +22,13 @@ enum class Direction(val x: Int, val z: Int) {
         }
 
         val CARDINAL_DIRECTIONS = listOf(NORTH, EAST, SOUTH, WEST)
+
+        fun directionFrom(character: Char): Direction = when(character) {
+            '^' -> NORTH
+            'v' -> SOUTH
+            '>' -> EAST
+            '<' -> WEST
+            else -> error("Invalid direction character '$character")
+        }
     }
 }

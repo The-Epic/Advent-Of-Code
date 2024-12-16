@@ -2,6 +2,7 @@ package days
 
 import xyz.epicebic.aoc.util.Direction
 import xyz.epicebic.aoc.util.Grid
+import xyz.epicebic.aoc.util.GridPoint
 
 class Day6 : Day(6) {
 
@@ -22,8 +23,8 @@ class Day6 : Day(6) {
 
 
         for ((location, direction) in visited) {
-            val x = location.first
-            val z = location.second
+            val x = location.x
+            val z = location.z
             val copy = grid.clone().move(x, z)
             val current = copy.currentChar()
             if (current == startChar || current == wallChar) continue
@@ -67,5 +68,5 @@ class Day6 : Day(6) {
         return if (looping) 0 else walkedDistinct.count()
     }
 
-    private data class GuardPosition(val location: Pair<Int, Int>, val direction: Direction)
+    private data class GuardPosition(val location: GridPoint, val direction: Direction)
 }
