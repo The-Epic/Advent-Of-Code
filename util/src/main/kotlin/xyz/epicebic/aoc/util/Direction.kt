@@ -12,6 +12,7 @@ enum class Direction(val x: Int, val z: Int) {
     SOUTH_WEST(1, -1);
 
     lateinit var nextClockwise: Direction
+    lateinit var nextAntiClockwise: Direction
 
     companion object {
         init {
@@ -19,6 +20,11 @@ enum class Direction(val x: Int, val z: Int) {
             EAST.nextClockwise = SOUTH
             SOUTH.nextClockwise = WEST
             WEST.nextClockwise = NORTH
+
+            NORTH.nextAntiClockwise = WEST
+            EAST.nextAntiClockwise = NORTH
+            SOUTH.nextAntiClockwise = EAST
+            WEST.nextAntiClockwise = SOUTH
         }
 
         val CARDINAL_DIRECTIONS = listOf(NORTH, EAST, SOUTH, WEST)
