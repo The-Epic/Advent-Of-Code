@@ -9,3 +9,6 @@ fun String.halve(): Pair<String, String> {
 fun List<String>.grid() = Grid.create(this)
 
 fun List<String>.toIntGrid() = Grid(this.map { line -> line.map { it.digitToInt() }.toMutableList() }.toMutableList())
+
+fun String.extractNumbersSeperated() = this.split(Regex("\\D+")).filter { it.isNotBlank() }.map { it.toInt() }
+fun String.extractNumbers() = this.filter { it.isDigit() }

@@ -77,7 +77,7 @@ open class NewDay : DefaultTask() {
 
     private fun updateMain(main: Path) {
         val modified = main.readLines().toMutableList()
-        modified[7] = "        Day$day(),"
+        modified.add(7, "        Day$day(),")
         main.writeLines(modified)
     }
 }
