@@ -117,6 +117,10 @@ class Grid<T : Comparable<T>>(val rows: Int, val cols: Int, var currentRow: Int,
 
 
     companion object {
+
+        const val WALL = '#'
+        const val OPEN = '.'
+
         fun create(input: List<String>): Grid<Char> {
             val grid = input.map { it.toCharArray().toMutableList() }
             if (!grid.map { it.size }.all { size -> grid[0].size == size }) {

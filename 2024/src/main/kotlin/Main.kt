@@ -5,6 +5,7 @@ import kotlin.time.measureTime
 
 fun main(args: Array<String>) {
     val days = listOf(
+        Day19(),
         Day18(),
         Day17(),
         Day16(),
