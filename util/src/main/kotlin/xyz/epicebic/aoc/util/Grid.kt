@@ -1,5 +1,7 @@
 package xyz.epicebic.aoc.util
 
+import kotlin.math.abs
+
 class Grid<T : Comparable<T>>(val rows: Int, val cols: Int, var currentRow: Int, var currentCol: Int, private val grid: MutableList<MutableList<T>>) {
 
     constructor(rows: Int, cols: Int, grid: MutableList<MutableList<T>>): this(rows, cols, 0, 0, grid)
@@ -93,6 +95,16 @@ class Grid<T : Comparable<T>>(val rows: Int, val cols: Int, var currentRow: Int,
         return foundPoints
     }
 
+    fun getCardinalNeighbourPoints(): List<GridPoint> {
+        return Direction.CARDINAL_DIRECTIONS.map { currentPos + it }
+    }
+
+    fun getCardinalNeighbourPoints(point: GridPoint): List<GridPoint> {
+        return Direction.CARDINAL_DIRECTIONS.map { point + it }
+    }
+
+
+
     fun clone(): Grid<T> {
         val copy = ArrayList<ArrayList<T>>(rows)
 
@@ -137,4 +149,6 @@ data class GridPoint(val x: Int, val z: Int) : Comparable<GridPoint> {
 
     operator fun plus(other: Direction) = GridPoint(x + other.x, z + other.z)
     operator fun plus(other: GridPoint) = GridPoint(x + other.x, z + other.z)
+
+    fun manhattanDistance(other: GridPoint) = abs(x - other.x) + abs(z - other.z)
 }
