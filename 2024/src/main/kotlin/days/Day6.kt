@@ -24,7 +24,7 @@ class Day6 : Day(6) {
 
         for ((location, direction) in visited) {
             val x = location.x
-            val z = location.z
+            val z = location.y
             val copy = grid.clone().move(x, z)
             val current = copy.currentChar()
             if (current == startChar || current == wallChar) continue

@@ -38,15 +38,15 @@ class Day14 : Day(14) {
             val (point, velocity) = robot
 
             val modifiedX = (point.x + 100 * velocity.x) pm width
-            val modifiedZ = (point.z + 100 * velocity.z) pm height
+            val modifiedZ = (point.y + 100 * velocity.y) pm height
 
             val newPoint = GridPoint(modifiedX, modifiedZ)
 
             quadrants[when {
-                newPoint.x > mx && newPoint.z < mz -> 0
-                newPoint.x < mx && newPoint.z < mz -> 1
-                newPoint.x < mx && newPoint.z > mz -> 2
-                newPoint.x > mx && newPoint.z > mz -> 3
+                newPoint.x > mx && newPoint.y < mz -> 0
+                newPoint.x < mx && newPoint.y < mz -> 1
+                newPoint.x < mx && newPoint.y > mz -> 2
+                newPoint.x > mx && newPoint.y > mz -> 3
                 else -> continue
             }]++
         }
@@ -68,7 +68,7 @@ class Day14 : Day(14) {
                 val (point, velocity) = robot
 
                 val modifiedX = (point.x + velocity.x) pm width
-                val modifiedZ = (point.z + velocity.z) pm height
+                val modifiedZ = (point.y + velocity.y) pm height
 
                 robot.point = GridPoint(modifiedX, modifiedZ)
             }

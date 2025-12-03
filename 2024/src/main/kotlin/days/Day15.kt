@@ -39,7 +39,7 @@ class Day15 : Day(15) {
                 var pushBoxes = false
                 val lookedAt = mutableListOf(grid.currentPos + direction, ahead)
                 while (true) {
-                    if (ahead.x < 0 || ahead.x >= grid.rows || ahead.z < 0 || ahead.z >= grid.cols) break
+                    if (ahead.x < 0 || ahead.x >= grid.rows || ahead.y < 0 || ahead.y >= grid.cols) break
 
                     if (grid.look(ahead) == wall) {
                         break
@@ -69,7 +69,7 @@ class Day15 : Day(15) {
 
 
         return grid.locateAll(box).sumOf {
-            (100 * it.x) + it.z
+            (100 * it.x) + it.y
         }
     }
 
@@ -94,7 +94,7 @@ class Day15 : Day(15) {
                             var pushBoxes = false
                             val lookedAt = mutableListOf(grid.currentPos + direction, ahead)
                             while (true) {
-                                if (ahead.x < 0 || ahead.x >= grid.rows || ahead.z < 0 || ahead.z >= grid.cols) break
+                                if (ahead.x < 0 || ahead.x >= grid.rows || ahead.y < 0 || ahead.y >= grid.cols) break
 
                                 if (grid.look(ahead) == wall) {
                                     break
@@ -206,7 +206,7 @@ class Day15 : Day(15) {
         }
 
         return grid.locateAll('[').sumOf {
-            (100 * it.x) + it.z
+            (100 * it.x) + it.y
         }
     }
 }

@@ -11,7 +11,7 @@ class Grid<T : Comparable<T>>(val rows: Int, val cols: Int, var currentRow: Int,
     val currentPos get() = GridPoint(currentRow, currentCol)
 
     fun move(row: Int, col: Int): Grid<T> {
-        if (row < 0 || row >= rows || col < 0 || col >= cols) error("Invalid access of grid at $row, $col")
+        if (row !in 0..<rows || col < 0 || col >= cols) error("Invalid access of grid at $row, $col")
 
         currentRow = row
         currentCol = col
@@ -20,24 +20,24 @@ class Grid<T : Comparable<T>>(val rows: Int, val cols: Int, var currentRow: Int,
     }
 
     fun move(point: GridPoint): Grid<T> {
-        if (point.x < 0 || point.x >= rows || point.z < 0 || point.z >= cols) error("Invalid access of grid at ${point.x}, ${point.z}")
+        if (point.x !in 0..<rows || point.y < 0 || point.y >= cols) error("Invalid access of grid at ${point.x}, ${point.y}")
 
         currentRow = point.x
-        currentCol = point.z
+        currentCol = point.y
 
         return this
     }
 
     fun look(row: Int, col: Int): T? {
-        if (row < 0 || row >= rows || col < 0 || col >= cols) return null
+        if (row !in 0..<rows || col < 0 || col >= cols) return null
 
         return grid[row][col]
     }
 
     fun look(point: GridPoint): T? {
-        if (point.x < 0 || point.x >= rows || point.z < 0 || point.z >= cols) return null
+        if (point.x !in 0..<rows || point.y < 0 || point.y >= cols) return null
 
-        return grid[point.x][point.z]
+        return grid[point.x][point.y]
     }
 
     fun move(direction: Direction): Grid<T> {
@@ -62,7 +62,7 @@ class Grid<T : Comparable<T>>(val rows: Int, val cols: Int, var currentRow: Int,
         val location = locateFirst(value)
 
         currentRow = location.x
-        currentCol = location.z
+        currentCol = location.y
         return this
     }
 
@@ -73,9 +73,9 @@ class Grid<T : Comparable<T>>(val rows: Int, val cols: Int, var currentRow: Int,
     }
 
     fun set(point: GridPoint, value: T): Grid<T> {
-        if (point.x < 0 || point.x >= rows || point.z < 0 || point.z >= cols) error("Invalid modification of grid at ${point.x}, ${point.z}")
+        if (point.x !in 0..<rows || point.y < 0 || point.y >= cols) error("Invalid modification of grid at ${point.x}, ${point.y}")
 
-        grid[point.x][point.z] = value
+        grid[point.x][point.y] = value
 
         return this
     }
@@ -144,11 +144,11 @@ class Grid<T : Comparable<T>>(val rows: Int, val cols: Int, var currentRow: Int,
     }
 }
 
-data class GridPoint(val x: Int, val z: Int) : Comparable<GridPoint> {
-    override fun compareTo(other: GridPoint) = compareValuesBy(this, other, GridPoint::x, GridPoint::z)
+data class GridPoint(val x: Int, val y: Int) : Comparable<GridPoint> {
+    override fun compareTo(other: GridPoint) = compareValuesBy(this, other, GridPoint::x, GridPoint::y)
 
-    operator fun plus(other: Direction) = GridPoint(x + other.x, z + other.z)
-    operator fun plus(other: GridPoint) = GridPoint(x + other.x, z + other.z)
+    operator fun plus(other: Direction) = GridPoint(x + other.x, y + other.z)
+    operator fun plus(other: GridPoint) = GridPoint(x + other.x, y + other.y)
 
-    fun manhattanDistance(other: GridPoint) = abs(x - other.x) + abs(z - other.z)
+    fun manhattanDistance(other: GridPoint) = abs(x - other.x) + abs(y - other.y)
 }

@@ -30,7 +30,7 @@ class Day18 : Day(18) {
             val pathExists = bfs(grid, start, end) != 0
 
             if (!pathExists) {
-                return "${point.x},${point.z}"
+                return "${point.x},${point.y}"
             }
         }
 
@@ -58,7 +58,7 @@ class Day18 : Day(18) {
             for (direction in Direction.CARDINAL_DIRECTIONS) {
                 val neighbor = current + direction
 
-                if (neighbor.x in 0 until grid.rows && neighbor.z in 0 until grid.cols &&
+                if (neighbor.x in 0 until grid.rows && neighbor.y in 0 until grid.cols &&
                     grid.look(neighbor) == '.' && neighbor !in visited) {
 
                     queue.add(Pair(neighbor, steps + 1))

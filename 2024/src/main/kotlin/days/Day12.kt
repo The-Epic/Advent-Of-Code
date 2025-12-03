@@ -20,7 +20,7 @@ class Day12 : Day(12) {
             while (stack.isNotEmpty()) {
                 val current = stack.removeAt(stack.size - 1)
                 val currentX = current.x
-                val currentZ = current.z
+                val currentZ = current.y
 
                 if (visited[currentX][currentZ] || grid.look(currentX, currentZ) != type) continue
 
