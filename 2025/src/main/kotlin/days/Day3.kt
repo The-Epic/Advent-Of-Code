@@ -3,18 +3,6 @@ package days
 import java.math.BigInteger
 
 class Day3 : Day(3) {
-    fun top(bank: String): Int {
-        if (bank.length < 2) return 0
-        var best = 0
-        var sufMax = bank.last() - '0'
-        for (i in bank.length - 2 downTo 0) {
-            val tens = bank[i] - '0'
-            best = maxOf(best, tens * 10 + sufMax)
-            sufMax = maxOf(sufMax, tens)
-        }
-        return best
-    }
-
     override fun partOne(inputLines: List<String>): Any {
         return inputLines.sumOf { maxDigit(it, 2) }
     }
