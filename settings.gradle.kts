@@ -11,4 +11,4 @@ dependencyResolutionManagement {
     }
 }
 
-include("util", "2024", "2023")
+include("util", "2024", "2023", "2025")

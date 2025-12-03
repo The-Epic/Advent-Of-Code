@@ -19,7 +19,7 @@ open class NewDay : DefaultTask() {
 
     @get:Input
     @set:Option(option = "year", description = "The days year")
-    var year: String = "2024"
+    var year: String = "2025"
 
     @get:Input
     @set:Option(option = "day", description = "The day to create")
@@ -77,7 +77,7 @@ open class NewDay : DefaultTask() {
 
     private fun updateMain(main: Path) {
         val modified = main.readLines().toMutableList()
-        modified.add(7, "        Day$day(),")
+        modified.add(6, "        Day$day(),")
         main.writeLines(modified)
     }
 }
