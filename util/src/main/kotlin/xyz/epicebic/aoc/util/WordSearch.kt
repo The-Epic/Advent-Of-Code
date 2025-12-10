@@ -19,7 +19,7 @@ class WordSearch(val input: List<String>) {
                 for (direction in directions) {
 
                     var dirX = x + direction.x
-                    var dirZ = z + direction.z
+                    var dirZ = z + direction.y
                     var lastChar = startChar
 
                     for (index in 1 until word.length) {
@@ -36,7 +36,7 @@ class WordSearch(val input: List<String>) {
                         lastChar = currentChar
 
                         dirX += direction.x
-                        dirZ += direction.z
+                        dirZ += direction.y
                     }
 
                     if (lastChar == endChar) counter++

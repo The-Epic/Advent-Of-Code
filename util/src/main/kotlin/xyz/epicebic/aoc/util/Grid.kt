@@ -41,11 +41,20 @@ class Grid<T : Comparable<T>>(val rows: Int, val cols: Int, var currentRow: Int,
     }
 
     fun move(direction: Direction): Grid<T> {
-        return move(currentRow + direction.x, currentCol + direction.z)
+        return move(currentRow + direction.x, currentCol + direction.y)
     }
 
     fun look(direction: Direction): T? {
-        return look(currentRow + direction.x, currentCol + direction.z)
+        return look(currentRow + direction.x, currentCol + direction.y)
+    }
+
+    fun collectAround(pos: GridPoint, directions: List<Direction>): List<GridPoint> {
+        val collected = mutableListOf<GridPoint>()
+        for (direction in directions) {
+            collected.add(pos.plus(direction))
+        }
+
+        return collected
     }
 
     fun locateFirst(value: T): GridPoint {
@@ -147,8 +156,12 @@ class Grid<T : Comparable<T>>(val rows: Int, val cols: Int, var currentRow: Int,
 data class GridPoint(val x: Int, val y: Int) : Comparable<GridPoint> {
     override fun compareTo(other: GridPoint) = compareValuesBy(this, other, GridPoint::x, GridPoint::y)
 
-    operator fun plus(other: Direction) = GridPoint(x + other.x, y + other.z)
+    operator fun plus(other: Direction) = GridPoint(x + other.x, y + other.y)
     operator fun plus(other: GridPoint) = GridPoint(x + other.x, y + other.y)
 
     fun manhattanDistance(other: GridPoint) = abs(x - other.x) + abs(y - other.y)
+
+    fun area(other: GridPoint): Long {
+        return (abs((other.x - this.x)) + 1).toLong() * (abs(other.y - this.y) + 1).toLong()
+    }
 }

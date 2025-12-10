@@ -47,7 +47,7 @@ class Day16 : Day(16) {
                 return currentDist
             }
 
-            val nextPos = GridPoint(currentPos.x + currentDir.x, currentPos.y + currentDir.z)
+            val nextPos = GridPoint(currentPos.x + currentDir.x, currentPos.y + currentDir.y)
             if (isValidMove(grid, nextPos)) {
                 val nextState = Pair(nextPos, currentDir)
                 val nextDist = currentDist + 1

@@ -29,7 +29,7 @@ class Day12 : Day(12) {
 
                 for (direction in Direction.CARDINAL_DIRECTIONS) {
                     val nextX = currentX + direction.x
-                    val nextZ = currentZ + direction.z
+                    val nextZ = currentZ + direction.y
                     val neighbour = grid.look(nextX, nextZ)
                     if (neighbour == type && (visited.getOrNull(nextX)?.getOrNull(nextZ) == false)) {
                         stack.add(GridPoint(nextX, nextZ))
